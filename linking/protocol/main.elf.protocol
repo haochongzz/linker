@@ -1,0 +1,35 @@
+// lines of elf file (witout comments and white line)
+22
+
+// lines of the following section header tables
+3
+
+// section header table
+// sh_name,sh_addr,sh_offset,sh_size
+.text,0x0,6,10
+.data,0x0,16,3
+.symtab,0x0,19,4
+
+// .text
+push   %rbp
+mov    %rsp,%rbp
+sub    $0x10,%rsp
+mov    $0x2,%esi
+lea    0x0(%rip),%rdi        # 14 <main+0x14>
+callq  19 <main+0x19>
+mov    %rax,-0x8(%rbp)
+mov    -0x8(%rbp),%rax
+leaveq 
+retq
+
+// .data
+0x0000000012340000  // array[0]
+0x000000000000abcd  // array[1]
+0x0000000f00000000  // bias
+
+// .symtab
+// st_name,bind,type,st_shndex,st_value,st_size
+array,STB_GLOBAL,STT_OBJECT,.data,0,2
+bias,STB_GLOBAL,STT_OBJECT,.data,2,1
+main,STB_GLOBAL,STT_FUNC,.text,0,10
+sum,STB_GLOBAL,STT_NOTYPE,SHN_UNDEF,0,0
